@@ -1,0 +1,12 @@
+# Bỏ qua thư mục môi trường ảo
+venv/
+__pycache__/
+
+# Bỏ qua dữ liệu nặng (GitHub không cho up file > 100MB)
+data/raw/
+data/processed/
+saved_models/*.h5
+
+# Bỏ qua các file hệ thống
+.DS_Store
+.vscode/
