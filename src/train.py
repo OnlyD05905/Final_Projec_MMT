@@ -20,7 +20,7 @@ def main_train():
         [X_time_train, X_stat_train], 
         y_train,
         validation_data=([X_time_test, X_stat_test], y_test),
-        epochs=10, 
+        epochs=50, 
         batch_size=64
     )
 

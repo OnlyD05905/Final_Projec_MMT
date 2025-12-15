@@ -11,12 +11,22 @@ os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'
 
 def evaluate_mass_attack():
     print("⏳ ĐANG TẢI DỮ LIỆU TỔNG (Khoảng 2.8 triệu dòng)...")
-    df = pd.read_csv(RAW_DATA_PATH)
+    df = pd.read_csv(RAW_DATA_PATH, encoding='cp1252')
     
     # 1. Sửa lỗi tên cột (quan trọng)
     df.columns = df.columns.str.strip()
     print("🧹 Đang quét dọn dữ liệu rác (Infinity/NaN)...")
     df = df.replace([np.inf, -np.inf], np.nan).dropna()
+    
+    # Fix corrupted Web Attack labels - use regex to match any corrupted character
+    df[LABEL_COLUMN] = df[LABEL_COLUMN].str.replace(
+        r'Web Attack .*? Brute Force', 'Web Attack – Brute Force', regex=True
+    ).str.replace(
+        r'Web Attack .*? Sql Injection', 'Web Attack – Sql Injection', regex=True
+    ).str.replace(
+        r'Web Attack .*? XSS', 'Web Attack – XSS', regex=True
+    )
+    
     # 2. Chỉ lấy dữ liệu TẤN CÔNG (Bỏ qua BENIGN để test khả năng bắt trộm)
     # Nếu bạn muốn test cả BENIGN thì bỏ dòng này đi
     attack_df = df[df[LABEL_COLUMN] != 'BENIGN']

@@ -1,12 +1,54 @@
-# Bỏ qua thư mục môi trường ảo
+# Python environments
 venv/
+env/
+ENV/
+.venv/
+*.egg-info/
+dist/
+build/
+
+# Python cache files
 __pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
 
-# Bỏ qua dữ liệu nặng (GitHub không cho up file > 100MB)
+# Large data files (GitHub file size limit)
 data/raw/
+data/raw/**/*.csv
+data/raw/**/*.pcap
 data/processed/
-saved_models/*.h5
+*.csv
+*.pcap
 
-# Bỏ qua các file hệ thống
-.DS_Store
+# Trained models
+saved_models/
+saved_models/*.h5
+saved_models/*.pkl
+saved_models/*.joblib
+
+# IDE and editor files
 .vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+Thumbs.db
+
+# OS files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+
+# Jupyter/IPython
+.ipynb_checkpoints/
+*.ipynb
+
+# Environment variables
+.env
+.env.local

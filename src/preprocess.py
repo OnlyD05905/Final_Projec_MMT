@@ -8,7 +8,7 @@ from src.utils import * # Import config từ utils
 def load_and_preprocess():
     print("--- [GĐ1] Đang tải dữ liệu... ---")
     # 1. Load Data
-    df = pd.read_csv(RAW_DATA_PATH)
+    df = pd.read_csv(RAW_DATA_PATH, encoding='cp1252')
     
     # Clean tên cột (xóa khoảng trắng)
     df.columns = df.columns.str.strip()
@@ -16,6 +16,15 @@ def load_and_preprocess():
     # Xử lý vô cực và NaN
     df = df.replace([np.inf, -np.inf], np.nan).dropna()
     print(f"Dữ liệu sau khi làm sạch: {df.shape}")
+    
+    # Fix corrupted Web Attack labels - use regex to match any corrupted character
+    df[LABEL_COLUMN] = df[LABEL_COLUMN].str.replace(
+        r'Web Attack .*? Brute Force', 'Web Attack – Brute Force', regex=True
+    ).str.replace(
+        r'Web Attack .*? Sql Injection', 'Web Attack – Sql Injection', regex=True
+    ).str.replace(
+        r'Web Attack .*? XSS', 'Web Attack – XSS', regex=True
+    )
 
     # 2. Label Encoding
     le = LabelEncoder()
@@ -31,6 +40,8 @@ def load_and_preprocess():
     print("--- [GĐ1] Đang tách đặc trưng (A & B)... ---")
     X_time = df[TIME_FEATURES].values
     X_stat = df[STAT_FEATURES].values
+    print(f"Input Time shape: {X_time.shape}")
+    print(f"Input Stat shape: {X_stat.shape}")
 
     # 4. Normalization (Riêng biệt cho từng nhánh)
     scaler_time = MinMaxScaler()
