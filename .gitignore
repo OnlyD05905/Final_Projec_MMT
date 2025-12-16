@@ -22,11 +22,11 @@ data/processed/
 *.csv
 *.pcap
 
-# Trained models
-saved_models/
-saved_models/*.h5
-saved_models/*.pkl
-saved_models/*.joblib
+# # Trained models
+# saved_models/
+# saved_models/*.h5
+# saved_models/*.pkl
+# saved_models/*.joblib
 
 # IDE and editor files
 .vscode/
